@@ -6,7 +6,15 @@ using UnityEngine.Events;
 public class EventManager : MonoSingleton<EventManager>
 {
     private Dictionary<string, UnityEvent> eventDictionary;
-    
+
+    private void Awake()
+    {
+        if(eventDictionary == null)
+        {
+            eventDictionary = new Dictionary<string, UnityEvent>();
+        }
+    }
+
     public static void StartListening(string eventName, UnityAction listener)
     {
         UnityEvent thisEvent = null;

@@ -16,7 +16,7 @@ public class LevelData : ScriptableObject
 
     [SerializeField]
     private float levelStartingTime;
-    public float LevelStartTime
+    public float LevelStartingTime
     {
         get
         {
@@ -25,8 +25,8 @@ public class LevelData : ScriptableObject
     }
 
     [SerializeField]
-    private int[] starRatingTargets = new int[3];
-    public int[] StarRatingTargets
+    private float[] starRatingTargets = new float[3];
+    public float[] StarRatingTargets
     {
         get
         {
