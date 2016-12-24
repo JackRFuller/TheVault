@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class PlayerInteractionHandler : MonoBehaviour
 {
+    [Header("Interaction Distances")]
     [SerializeField]
-    private const float playerInteractionRange = 3f;
+    private float bankInteractionDistance;
+    [SerializeField]
+    private float doorInteractionDistance;
+    
     private Camera playerCamera;
 
 
@@ -31,11 +35,18 @@ public class PlayerInteractionHandler : MonoBehaviour
         Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
-        if(Physics.Raycast(ray, out hit, playerInteractionRange))
+        if(Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
             if(hit.collider.tag.Equals("Bank"))
             {
-                WaitForBankInput();
+                if(ReturnDistance(hit.transform.position, transform.position) < bankInteractionDistance)
+                    WaitForBankInput();
+            }
+
+            if(hit.collider.tag.Equals("Door"))
+            {
+                if (ReturnDistance(hit.transform.position, transform.position) < doorInteractionDistance)
+                        WaitForDoorInput(hit.transform.parent.gameObject);
             }
         }
     }
@@ -43,7 +54,7 @@ public class PlayerInteractionHandler : MonoBehaviour
     void WaitForBankInput()
     {
         //Check for Input
-        if (ExtensionMehtods.GetPlayerInteractionInput())
+        if (ExtensionMethods.GetPlayerInteractionInput())
         {
             if(LevelManager.Instance.CollectionTotal >= 0)
             {
@@ -55,6 +66,21 @@ public class PlayerInteractionHandler : MonoBehaviour
             EventManager.TriggerEvent("StopTransfer");
         }
             
+    }
+
+    void WaitForDoorInput(GameObject doorObj)
+    {
+        if(ExtensionMethods.GetPlayerInteractionInput())
+        {
+            DoorHandler door = doorObj.GetComponent<DoorHandler>();
+            door.OpenDoor();
+        }
+    }
+
+    float ReturnDistance(Vector3 targetPosition, Vector3 playerPosition)
+    {
+        float distance = Vector3.Distance(targetPosition, playerPosition);
+        return distance;
     }
 
    

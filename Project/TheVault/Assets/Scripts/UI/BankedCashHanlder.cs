@@ -10,6 +10,10 @@ public class BankedCashHanlder : MonoBehaviour
     [SerializeField]
     private Image bankedCashBar;
 
+    [Header("Stars")]
+    [SerializeField]
+    private Image[] starIcons;
+
     private float[] starTargets;
 
     private void OnEnable()
@@ -32,11 +36,25 @@ public class BankedCashHanlder : MonoBehaviour
     {
         bankedCashValue.text = "$" + LevelManager.Instance.BankedTotal.ToString("F0");
         starTargets = LevelManager.Instance.CurrentLevel.StarRatingTargets;
+
+        for (int i = 0; i < starIcons.Length; i++)
+        {
+            starIcons[i].enabled = false;
+        }
     }
 	
 	void UpdateBankedCash()
     {
         float bankedTotal = LevelManager.Instance.BankedTotal;
+
+        if (bankedTotal >= starTargets[0])
+            starIcons[0].enabled = true;
+
+        if (bankedTotal >= starTargets[1])
+            starIcons[1].enabled = true;
+
+        if (bankedTotal >= starTargets[1])
+            starIcons[1].enabled = true;
 
         //Update Text
         bankedCashValue.text = "$" + bankedTotal.ToString("F0");

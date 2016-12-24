@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ExtensionMehtods : MonoBehaviour
+public class ExtensionMethods : MonoBehaviour
 {
     #region Inputs
 

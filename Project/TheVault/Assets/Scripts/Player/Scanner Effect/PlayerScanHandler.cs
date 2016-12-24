@@ -51,13 +51,7 @@ public class PlayerScanHandler : MonoBehaviour
                 ScanDistance = 0;
             }
 			
-		}
-
-		if (Input.GetKeyDown(KeyCode.C))
-		{
-			_scanning = true;
-			ScanDistance = 0;
-		}
+		}		
 
 		if (Input.GetMouseButtonDown(0))
 		{

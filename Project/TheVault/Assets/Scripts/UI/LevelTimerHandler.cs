@@ -17,6 +17,16 @@ public class LevelTimerHandler : MonoBehaviour
         EventManager.StopListening("RunLevelTimer", UpdateLevelTimer);
     }
 
+    private void Start()
+    {
+        Init();
+    }
+
+    void Init()
+    {
+        UpdateLevelTimer();
+    }
+
     /// <summary>
     /// Triggered in Level Manager
     /// </summary>
@@ -30,9 +40,9 @@ public class LevelTimerHandler : MonoBehaviour
         string formattedTime = string.Empty;
 
         if(levelTimer > 0)
-            formattedTime = ExtensionMehtods.FormatTimeText(levelTimer);
+            formattedTime = ExtensionMethods.FormatTimeText(levelTimer);
         else
-            formattedTime = ExtensionMehtods.FormatTimeText(0);
+            formattedTime = ExtensionMethods.FormatTimeText(0);
 
         levelTimerText.text = formattedTime;
     }

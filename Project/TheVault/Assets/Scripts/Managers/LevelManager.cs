@@ -34,12 +34,18 @@ public class LevelManager : MonoSingleton<LevelManager>
 
     private void OnEnable()
     {
+        EventManager.StartListening("StartLevel", StartLevel);
+
         EventManager.StartListening("TransferMoney", InitiateTransfer);     
         EventManager.StartListening("StopTransfer", StopTransfer);
+
+
     }
 
     private void OnDisable()
     {
+        EventManager.StopListening("StartLevel", StartLevel);
+
         EventManager.StopListening("TransferMoney", InitiateTransfer);     
         EventManager.StopListening("StopTransfer", StopTransfer);
     }
@@ -51,7 +57,14 @@ public class LevelManager : MonoSingleton<LevelManager>
 
     void SetupLevel()
     {
-        levelClock.timer = currentLevel.LevelStartingTime;
+        levelClock.timer = currentLevel.LevelStartingTime;       
+    }
+
+    /// <summary>
+    /// Triggered by Start Line Handler
+    /// </summary>
+    void StartLevel()
+    {
         levelClock.isRunning = true;
     }
 
