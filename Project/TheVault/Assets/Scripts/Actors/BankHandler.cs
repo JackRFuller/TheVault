@@ -4,14 +4,46 @@ using UnityEngine;
 
 public class BankHandler : MonoBehaviour
 {
+    [SerializeField]
+    private AudioSource bankAudio;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private void OnEnable()
+    {
+        EventManager.StartListening("TransferMoney", EnableBank);
+        EventManager.StartListening("StopTransfer", DisableBank);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening("TransferMoney", EnableBank);
+        EventManager.StopListening("StopTransfer", DisableBank);
+    }
+
+    private void Start()
+    {
+        Init();
+    }
+
+    void Init()
+    {
+        bankAudio.GetComponent<AudioSource>();
+    }
+
+    void EnableBank()
+    {
+        if (LevelManager.Instance.CollectionTotal > 0)
+        {
+            if (!bankAudio.isPlaying)
+                bankAudio.Play();
+        }
+        else
+        {
+            DisableBank();
+        }        
+    }
+
+    void DisableBank()
+    {
+        bankAudio.Stop();
+    }
 }

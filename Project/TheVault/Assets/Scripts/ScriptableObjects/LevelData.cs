@@ -33,4 +33,12 @@ public class LevelData : ScriptableObject
             return starRatingTargets;
         }
     }
+
+    [Header("Materials")]
+    [SerializeField]
+    private Material disabledMaterial;
+    public Material DisabledMaterial { get { return disabledMaterial; } }
+    [SerializeField]
+    private Material enabledMaterial;
+    public Material EnabledMaterial { get { return enabledMaterial; } }
 }

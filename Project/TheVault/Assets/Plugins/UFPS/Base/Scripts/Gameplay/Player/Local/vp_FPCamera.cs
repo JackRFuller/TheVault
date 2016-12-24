@@ -219,22 +219,22 @@ public class vp_FPCamera : vp_Component
 		// NOTE: we don't use GetComponentInChildren here because that
 		// would return the MainCamera (on this transform)
 		Camera weaponCam = null;
-		foreach (Transform t in Transform)
-		{
-			weaponCam = (Camera)t.GetComponent(typeof(Camera));
-			if (weaponCam != null)
-			{
-				weaponCam.transform.localPosition = Vector3.zero;
-				weaponCam.transform.localEulerAngles = Vector3.zero;
-				weaponCam.clearFlags = CameraClearFlags.Depth;
-				weaponCam.cullingMask = (1 << vp_Layer.LocalPlayer);	// only render the weapon
-				weaponCam.depth = 1;
-				weaponCam.farClipPlane = 100;
-				weaponCam.nearClipPlane = 0.01f;
-				weaponCam.fieldOfView = 60;
-				break;
-			}
-		}
+		//foreach (Transform t in Transform)
+		//{
+		//	weaponCam = (Camera)t.GetComponent(typeof(Camera));
+		//	if (weaponCam != null)
+		//	{
+		//		weaponCam.transform.localPosition = Vector3.zero;
+		//		weaponCam.transform.localEulerAngles = Vector3.zero;
+		//		weaponCam.clearFlags = CameraClearFlags.Depth;
+		//		weaponCam.cullingMask = (1 << vp_Layer.LocalPlayer);	// only render the weapon
+		//		weaponCam.depth = 1;
+		//		weaponCam.farClipPlane = 100;
+		//		weaponCam.nearClipPlane = 0.01f;
+		//		weaponCam.fieldOfView = 60;
+		//		break;
+		//	}
+		//}
 
 		// create springs for camera motion
 
