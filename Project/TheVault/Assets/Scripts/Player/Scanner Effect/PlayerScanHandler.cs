@@ -32,7 +32,7 @@ public class PlayerScanHandler : BaseMonoBehaviour
         geometry = FindObjectsOfType<SwitchableGeometry>();
     }
 
-	void Update()
+	public override void UpdateNormal()
 	{
 		if (_scanning)
 		{

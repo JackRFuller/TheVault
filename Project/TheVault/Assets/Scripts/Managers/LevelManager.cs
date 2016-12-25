@@ -51,7 +51,7 @@ public class LevelManager : MonoSingleton<LevelManager>
         levelClock.isRunning = true;
     }
 
-    void Update()
+    public override void UpdateNormal()
     {
         if (levelClock.isRunning)
             RunLevelTimer();       

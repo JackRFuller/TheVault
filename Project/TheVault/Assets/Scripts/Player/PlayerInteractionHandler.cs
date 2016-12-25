@@ -25,7 +25,7 @@ public class PlayerInteractionHandler : BaseMonoBehaviour
     }
 	
 	// Update is called once per frame
-	void Update ()
+	public override void UpdateNormal ()
     {
         SendOutRay();
 	}
