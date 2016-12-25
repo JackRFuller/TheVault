@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInteractionHandler : MonoBehaviour
+public class PlayerInteractionHandler : BaseMonoBehaviour
 {
     [Header("Interaction Distances")]
     [SerializeField]

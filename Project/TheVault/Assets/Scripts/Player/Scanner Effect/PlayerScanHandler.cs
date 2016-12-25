@@ -2,8 +2,10 @@
 using System.Collections;
 
 [ExecuteInEditMode]
-public class PlayerScanHandler : MonoBehaviour
+public class PlayerScanHandler : BaseMonoBehaviour
 {
+    private AudioSource scannerAudio;
+
 	private Transform ScannerOrigin;
 	public Material EffectMaterial;
 	private float ScanDistance;
@@ -25,6 +27,7 @@ public class PlayerScanHandler : MonoBehaviour
 
     void Start()
 	{
+        scannerAudio = this.GetComponent<AudioSource>();
         ScannerOrigin = this.transform;
         geometry = FindObjectsOfType<SwitchableGeometry>();
     }
@@ -59,7 +62,7 @@ public class PlayerScanHandler : MonoBehaviour
 			//ScannerOrigin.position = transform.position;
             _scanning = true;
             ScanDistance = 0;
-
+            scannerAudio.Play();
 			//if (Physics.Raycast(ray, out hit))
 			//{
 			//	_scanning = true;

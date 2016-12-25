@@ -14,15 +14,6 @@ public class LevelManager : MonoSingleton<LevelManager>
     private float bankedTotal = 0; //Tracks how much the player has banked
     public float BankedTotal { get { return bankedTotal; } }
 
-    //Money Transfer Variables
-    private bool hasIntiatedTransfer;
-    private float startingCollectionValue;
-    private float startingValue;
-    private float targetValue;
-    private float timeStarted;
-    private const float transferTime = 5.0f;    
-
-
     //Level Clock
     private LevelClock levelClock;
     public LevelClock LevelTimer { get { return levelClock; } }
@@ -35,19 +26,11 @@ public class LevelManager : MonoSingleton<LevelManager>
     private void OnEnable()
     {
         EventManager.StartListening("StartLevel", StartLevel);
-
-        EventManager.StartListening("TransferMoney", InitiateTransfer);     
-        EventManager.StartListening("StopTransfer", StopTransfer);
-
-
     }
 
     private void OnDisable()
     {
-        EventManager.StopListening("StartLevel", StartLevel);
-
-        EventManager.StopListening("TransferMoney", InitiateTransfer);     
-        EventManager.StopListening("StopTransfer", StopTransfer);
+        EventManager.StopListening("StartLevel", StartLevel);      
     }
 
     private void Start()
@@ -71,10 +54,7 @@ public class LevelManager : MonoSingleton<LevelManager>
     void Update()
     {
         if (levelClock.isRunning)
-            RunLevelTimer();
-
-        if (hasIntiatedTransfer)
-            TransferFromCollectionToBank();
+            RunLevelTimer();       
     }
 
     void RunLevelTimer()
@@ -89,44 +69,6 @@ public class LevelManager : MonoSingleton<LevelManager>
             levelClock.timer = 0;
         }
     }
-
-    
-    void InitiateTransfer()
-    {
-        if(!hasIntiatedTransfer)
-        {
-            if(collectionTotal > 0)
-            {
-                startingCollectionValue = collectionTotal;
-                startingValue = bankedTotal;               
-                targetValue = bankedTotal + collectionTotal;                
-                hasIntiatedTransfer = true;
-                timeStarted = Time.time;
-            }
-        }
-    }
-
-    void TransferFromCollectionToBank()
-    {
-        float timeSinceStarted = Time.time - timeStarted;
-        float percentageComplete = timeSinceStarted / transferTime;
-
-        bankedTotal = Mathf.Lerp(startingValue, targetValue, percentageComplete);
-        collectionTotal = Mathf.Lerp(startingCollectionValue, 0, percentageComplete);
-
-        if(percentageComplete >= 1.0f)
-        {
-            bankedTotal = targetValue;
-            collectionTotal = 0;
-
-            StopTransfer();
-        }
-    }
-
-    void StopTransfer()
-    {
-        hasIntiatedTransfer = false;
-    }
     
     /// <summary>
     /// Called when a collectible is picked
@@ -136,7 +78,7 @@ public class LevelManager : MonoSingleton<LevelManager>
     public void AddToCollection(int value)
     {
         collectionTotal += value;
-        EventManager.TriggerEvent("CollectingCash");
+        EventManager.TriggerEvent("CollectedMoney");          
     }
 	
 }

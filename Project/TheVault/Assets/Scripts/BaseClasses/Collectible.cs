@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Collectible : MonoBehaviour
+public class Collectible : BaseMonoBehaviour
 {
     [SerializeField]
     protected int itemValue = 1000;
