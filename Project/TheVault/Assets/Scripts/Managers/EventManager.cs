@@ -7,7 +7,7 @@ public class EventManager : MonoSingleton<EventManager>
 {
     private Dictionary<string, UnityEvent> eventDictionary;
 
-    private void Awake()
+    public override void Awake()
     {
         if(eventDictionary == null)
         {
