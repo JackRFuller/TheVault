@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[ExecuteInEditMode]
 public class PlayerScanHandler : BaseMonoBehaviour
 {
+    private bool canScan = true;
+
     private AudioSource scannerAudio;
 
 	private Transform ScannerOrigin;
@@ -21,8 +22,15 @@ public class PlayerScanHandler : BaseMonoBehaviour
 
     void OnEnable()
     {
+        EventManager.StartListening("EndLevel", ToggleScan);
+
         _camera = GetComponent<Camera>();
         _camera.depthTextureMode = DepthTextureMode.Depth;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening("EndLevel", ToggleScan);
     }
 
     void Start()
@@ -32,8 +40,23 @@ public class PlayerScanHandler : BaseMonoBehaviour
         geometry = FindObjectsOfType<SwitchableGeometry>();
     }
 
+    void ToggleScan()
+    {
+        if (canScan)
+        {
+            canScan = false;
+        }
+        else
+        {
+            canScan = true;
+        }
+    }
+
 	public override void UpdateNormal()
 	{
+        if (!canScan)
+            return;
+
 		if (_scanning)
 		{
             if(ScanDistance < maxScanDistance)

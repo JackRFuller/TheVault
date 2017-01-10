@@ -10,6 +10,10 @@ public class BankedCashHanlder : BaseMonoBehaviour
     [SerializeField]
     private Image bankedCashBar;
 
+    [Header("Star Transforms")]
+    [SerializeField]
+    private RectTransform[] starTransforms;
+
     [Header("Stars")]
     [SerializeField]
     private Image[] starIcons;
@@ -43,6 +47,7 @@ public class BankedCashHanlder : BaseMonoBehaviour
     void Start ()
     {
         Init();
+        PositionStarScores();
 	}
 
     void Init()
@@ -62,6 +67,38 @@ public class BankedCashHanlder : BaseMonoBehaviour
 
         oldTotal = 0;
         oldFillAmount = bankedCashBar.fillAmount;
+    }
+
+    private void PositionStarScores()
+    {
+        //Place Stars
+        float[] percentages = new float[3];
+        for (int i = 0; i < starTargets.Length; i++)
+        {
+            percentages[i] = starTargets[i] / starTargets[2];
+            Debug.Log(percentages[i]);
+        }
+
+        RectTransform bar = bankedCashBar.GetComponent<RectTransform>();
+
+        Vector3 startPosition = bar.localPosition;
+
+        Vector3 endPosition = new Vector3(startPosition.x + bar.sizeDelta.x,
+                                          startPosition.y,
+                                          startPosition.z);
+
+        float difference = endPosition.x - startPosition.x;
+
+        for (int i = 0; i < starTransforms.Length; i++)
+        {
+            //Work out percentage of score in reference to the difference
+            float offset = difference * percentages[i];
+            Vector3 newPosition = new Vector3(startPosition.x + offset,
+                                          starTransforms[i].localPosition.y,
+                                          startPosition.z);
+
+            starTransforms[i].localPosition = newPosition;
+        }
     }
 
     void Update()

@@ -6,10 +6,8 @@ public class PlayerInteractionHandler : BaseMonoBehaviour
 {
     [Header("Interaction Distances")]
     [SerializeField]
-    private float bankInteractionDistance;
+    private float lockDistance;
     [SerializeField]
-    private float doorInteractionDistance;
-    
     private Camera playerCamera;
 
 
@@ -37,45 +35,23 @@ public class PlayerInteractionHandler : BaseMonoBehaviour
 
         if(Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            if(hit.collider.tag.Equals("Bank"))
-            {
-                if(ReturnDistance(hit.transform.position, transform.position) < bankInteractionDistance)
-                    WaitForBankInput();
-            }
-
-            if(hit.collider.tag.Equals("Door"))
-            {
-                if (ReturnDistance(hit.transform.position, transform.position) < doorInteractionDistance)
-                        WaitForDoorInput(hit.transform.parent.gameObject);
-            }
+           if(hit.collider.tag.Equals("Lock"))
+           {
+                if(ReturnDistance(hit.transform.position,transform.position) <= lockDistance)
+                {
+                    WaitForLockInput(hit.collider.gameObject);
+                }
+           }
         }
-    }
-
-    void WaitForBankInput()
+    } 
+    
+    private void WaitForLockInput(GameObject lockObj)
     {
-        //Check for Input
         if (ExtensionMethods.GetPlayerInteractionInput())
         {
-            if(LevelManager.Instance.CollectionTotal >= 0)
-            {
-                EventManager.TriggerEvent("TransferMoney");
-            }
+            lockObj.SendMessage("RemoveLock", SendMessageOptions.DontRequireReceiver);            
         }
-        else
-        {
-            EventManager.TriggerEvent("StopTransfer");
-        }
-            
-    }
-
-    void WaitForDoorInput(GameObject doorObj)
-    {
-        if(ExtensionMethods.GetPlayerInteractionInput())
-        {
-            DoorHandler door = doorObj.GetComponent<DoorHandler>();
-            door.OpenDoor();
-        }
-    }
+    }   
 
     float ReturnDistance(Vector3 targetPosition, Vector3 playerPosition)
     {

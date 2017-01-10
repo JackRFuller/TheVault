@@ -6,6 +6,16 @@ public class StartLineHandler : MonoBehaviour
 {
     private Collider startCollider;
 
+    private void OnEnable()
+    {
+        EventManager.StartListening("StartLevel", DisableStartLine);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening("StartLevel", DisableStartLine);
+    }
+
     private void Start()
     {
         Init();
@@ -21,6 +31,10 @@ public class StartLineHandler : MonoBehaviour
     void StartLevel()
     {
         EventManager.TriggerEvent("StartLevel");
+    }
+
+    void DisableStartLine()
+    {
         startCollider.enabled = false;
         startCollider.isTrigger = false;
     }
@@ -30,7 +44,7 @@ public class StartLineHandler : MonoBehaviour
         if(other.tag.Equals("Player"))
         {
             StartLevel();
-        }
+        }                
     }
 	
 }

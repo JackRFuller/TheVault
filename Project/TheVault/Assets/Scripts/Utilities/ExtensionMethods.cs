@@ -35,4 +35,14 @@ public class ExtensionMethods : MonoBehaviour
 
         return formattedTime;
     }
+
+    #region Animation
+
+    public static void TriggerAnimation(Animator anim, string triggerName)
+    {
+        anim.SetTrigger(triggerName);
+    }
+
+    #endregion
 }
+
