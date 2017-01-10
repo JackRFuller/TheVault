@@ -13,11 +13,18 @@ public class MainMenuHandler : BaseMonoBehaviour
     [SerializeField]
     private GameObject menuObj;
 
+    [Header("Top Level Menu Options")]
+    [SerializeField]
+    private GameObject levelSelectObj;
+    [SerializeField]
+    private GameObject instructionObj;
+
     [Header("Individual Level UI Elements")]
     [SerializeField]
     private Text levelTitleText;
     [SerializeField]
     private Text[] targetScoreTexts;
+
 
     private void Start()
     {
@@ -32,6 +39,7 @@ public class MainMenuHandler : BaseMonoBehaviour
 
     private void InitializeLevelMenu()
     {
+        menuCamera.enabled = true;
         levelTitleText.text = currentLevel.LevelTitle;
 
         //Show Target Scores
@@ -58,6 +66,20 @@ public class MainMenuHandler : BaseMonoBehaviour
     private void InitialiseLevel()
     {
         EventManager.TriggerEvent("SetupLevel");
+    }
+
+    public void OnClickToggleMenuMode()
+    {
+        if(levelSelectObj.activeInHierarchy)
+        {
+            levelSelectObj.SetActive(false);
+            instructionObj.SetActive(true);
+        }
+        else
+        {
+            levelSelectObj.SetActive(true);
+            instructionObj.SetActive(false);
+        }
     }
 
 }
