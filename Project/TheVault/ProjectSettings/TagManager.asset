@@ -8,6 +8,7 @@ TagManager:
   - Door
   - NOTLedgeGrabable
   - Lock
+  - Wire
   layers:
   - Default
   - TransparentFX

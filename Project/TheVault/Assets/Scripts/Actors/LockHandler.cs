@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class LockHandler : BaseMonoBehaviour
 {
+    private AudioSource lockAudioSource;
+
     [SerializeField]
     private Image lockBar;
 
@@ -12,13 +14,36 @@ public class LockHandler : BaseMonoBehaviour
     private const float unlockRate = 0.3f;
     private float unlockStatus = 1;
 
+    [Header("Wire Settings")]
+    [SerializeField]
+    private MeshRenderer wire;
+    [SerializeField]
+    private Material enabledWire;
+    [SerializeField]
+    private Material disabledWire;
+   
+
     private void Start()
     {
-        lockCollider = GetComponent<Collider>();
+        lockCollider = this.GetComponent<Collider>();
+        lockAudioSource = this.GetComponent<AudioSource>();
+
+        if(wire)
+        {
+            wire.material = enabledWire;
+        }
+        else
+        {
+            Debug.LogError("No Wire for " + gameObject.name);
+        }
+       
     }
 
     private void RemoveLock()
     {
+        if (!lockAudioSource.isPlaying)
+            lockAudioSource.Play();
+
         unlockStatus -= unlockRate * Time.deltaTime;
 
         //Set Canvas Status
@@ -32,6 +57,7 @@ public class LockHandler : BaseMonoBehaviour
 
     private void Unlock()
     {
+        wire.material = disabledWire;
         lockBar.fillAmount = 0;
         lockCollider.enabled = false;
         EventManager.TriggerEvent("Unlock");

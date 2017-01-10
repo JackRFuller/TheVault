@@ -126,7 +126,7 @@ public class LockWiringSystem : BaseMonoBehaviour
 
         newWire.GetComponent<MeshFilter>().sharedMesh = new Mesh();
         newWire.GetComponent<MeshFilter>().sharedMesh.CombineMeshes(combine);
-        newWire.SetActive(true);
+        newWire.SetActive(true);       
 
     }
 
