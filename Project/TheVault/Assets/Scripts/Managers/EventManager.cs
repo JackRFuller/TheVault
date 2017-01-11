@@ -49,6 +49,7 @@ public class EventManager : MonoSingleton<EventManager>
         if(Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.Invoke();
+            Debug.Log(eventName);
         }
     }
 }

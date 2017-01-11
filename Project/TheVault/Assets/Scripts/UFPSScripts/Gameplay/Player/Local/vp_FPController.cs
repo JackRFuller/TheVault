@@ -20,7 +20,8 @@ using System.Collections.Generic;
 
 public class vp_FPController : vp_CharacterController
 {
-	
+    private bool m_EnableMovement = true;
+
 	// general
 	protected Vector3 m_FixedPosition = Vector3.zero;		// exact position. updates at a fixed interval and is used for gameplay
 	protected Vector3 m_SmoothPosition = Vector3.zero;		// smooth position. updates as often as possible and is only used for the camera
@@ -102,6 +103,8 @@ public class vp_FPController : vp_CharacterController
 	/// </summary>
 	protected override void OnEnable()
 	{
+        EventManager.StartListening("ExittedLevel", DisableMovement);
+        EventManager.StartListening("FailedLevel", DisableMovement);
 
 		base.OnEnable();
 
@@ -115,8 +118,10 @@ public class vp_FPController : vp_CharacterController
 	/// </summary>
 	protected override void OnDisable()
 	{
+        EventManager.StopListening("ExittedLevel", DisableMovement);
+        EventManager.StopListening("FailedLevel", DisableMovement);
 
-		base.OnDisable();
+        base.OnDisable();
 
 		vp_TargetEvent<Vector3>.Unregister(m_Root, "ForceImpact", AddForce);
 
@@ -199,12 +204,26 @@ public class vp_FPController : vp_CharacterController
 
 	}
 
+    void DisableMovement()
+    {
+        m_EnableMovement = false;
+        m_Velocity = Vector3.zero;
+        //CharacterController.enabled = false;
+    }
+
+    void EnableMovement()
+    {
+
+    }
+
 
 	/// <summary>
 	/// 
 	/// </summary>
 	protected override void Update()
 	{
+        if (!m_EnableMovement)
+            return;
 
 		base.Update();
 
@@ -224,8 +243,10 @@ public class vp_FPController : vp_CharacterController
 	/// </summary>
 	protected override void FixedUpdate()
 	{
+        if (!m_EnableMovement)
+            return;
 
-		if (Time.timeScale == 0.0f)
+        if (Time.timeScale == 0.0f)
 			return;
 
 		// convert user input to motor throttle

@@ -48,12 +48,12 @@ public class EndLevelScreenHandler : BaseMonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.StartListening("EndLevel", RevealEndScreen);
+        EventManager.StartListening("ExittedLevel", RevealEndScreen);
     }
 
     private void OnDisable()
     {
-        EventManager.StopListening("EndLevel", RevealEndScreen);
+        EventManager.StopListening("ExittedLevel", RevealEndScreen);
     }
 
     private void Start()

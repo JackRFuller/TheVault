@@ -39,6 +39,6 @@ public class EndZoneHandler : BaseMonoBehaviour
 
     private void EndLevel()
     {
-        EventManager.TriggerEvent("EndLevel");
+        EventManager.TriggerEvent("ExittedLevel");
     }
 }

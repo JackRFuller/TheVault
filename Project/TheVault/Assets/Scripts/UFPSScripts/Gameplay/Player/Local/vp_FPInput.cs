@@ -15,7 +15,6 @@ using System.Collections.Generic;
 
 public class vp_FPInput : vp_Component
 {
-
 	// mouse look
 	public Vector2 MouseLookSensitivity = new Vector2(5.0f, 5.0f);
 	public int MouseLookSmoothSteps = 10;				// allowed range: 1-20
@@ -66,7 +65,10 @@ public class vp_FPInput : vp_Component
 	protected override void OnEnable()
 	{
 
-		if (FPPlayer != null)
+        EventManager.StartListening("ExittedLevel", DisableInput);
+        EventManager.StartListening("FailedLevel", DisableInput);
+
+        if (FPPlayer != null)
 			FPPlayer.Register(this);
 
 	}
@@ -78,7 +80,10 @@ public class vp_FPInput : vp_Component
 	protected override void OnDisable()
 	{
 
-		if (FPPlayer != null)
+        EventManager.StopListening("ExittedLevel", DisableInput);
+        EventManager.StopListening("FailedLevel", DisableInput);
+
+        if (FPPlayer != null)
 			FPPlayer.Unregister(this);
 
 	}
@@ -89,9 +94,11 @@ public class vp_FPInput : vp_Component
 	/// </summary>
 	protected override void Update()
 	{
+        if (!m_AllowGameplayInput)
+            return;
 
-		// manage input for GUI
-		UpdateCursorLock();
+        // manage input for GUI
+        //UpdateCursorLock();
 
 		// toggle pausing and abort if paused
 		UpdatePause();
@@ -101,8 +108,7 @@ public class vp_FPInput : vp_Component
 
 		// --- NOTE: everything below this line will be disabled on pause! ---
 
-		if (!m_AllowGameplayInput)
-			return;
+		
 
 		// interaction
 		InputInteract();
@@ -123,6 +129,10 @@ public class vp_FPInput : vp_Component
 
 	}
 
+    void DisableInput()
+    {
+        m_AllowGameplayInput = false;
+    }
 
 	/// <summary>
 	/// handles interaction with the game world

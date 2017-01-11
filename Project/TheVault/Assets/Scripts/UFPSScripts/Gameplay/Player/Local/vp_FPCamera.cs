@@ -23,6 +23,7 @@ using System.Collections;
 
 public class vp_FPCamera : vp_Component
 {
+    private bool m_AllowInput = true; //Triggered when at the start or end of a level
 
 	// character controller of the parent gameobject
 	public vp_FPController FPController = null;
@@ -263,6 +264,9 @@ public class vp_FPCamera : vp_Component
 	/// </summary>
 	protected override void OnEnable()
 	{
+        EventManager.StartListening("ExittedLevel", DisableInput);
+        EventManager.StartListening("FailedLevel", DisableInput);
+        
 		base.OnEnable();
 		vp_TargetEvent<float>.Register(m_Root, "CameraBombShake", OnMessage_CameraBombShake);
 		vp_TargetEvent<float>.Register(m_Root, "CameraGroundStomp", OnMessage_CameraGroundStomp);
@@ -274,7 +278,10 @@ public class vp_FPCamera : vp_Component
 	/// </summary>
 	protected override void OnDisable()
 	{
-		base.OnDisable();
+        EventManager.StopListening("ExittedLevel", DisableInput);
+        EventManager.StopListening("FailedLevel", DisableInput);
+
+        base.OnDisable();
 		vp_TargetEvent<float>.Unregister(m_Root, "CameraBombShake", OnMessage_CameraBombShake);
 		vp_TargetEvent<float>.Unregister(m_Root, "CameraGroundStomp", OnMessage_CameraGroundStomp);
 	}
@@ -314,12 +321,27 @@ public class vp_FPCamera : vp_Component
 		
 	}
 
+    /// <summary>
+    /// Called from Event Manager - EndLevel/FailedLevel
+    /// </summary>
+    void DisableInput()
+    {
+        m_AllowInput = false;
+    }
+
+    void EnableMovement()
+    {
+
+    }
+
 
 	/// <summary>
 	/// 
 	/// </summary>
 	protected override void Update()
 	{
+        if (!m_AllowInput)
+            return;
 
 		base.Update();
 
@@ -337,7 +359,10 @@ public class vp_FPCamera : vp_Component
 	protected override void FixedUpdate()
 	{
 
-		base.FixedUpdate();
+        if (!m_AllowInput)
+            return;
+
+        base.FixedUpdate();
 
 		if (Time.timeScale == 0.0f)
 			return;
@@ -364,7 +389,10 @@ public class vp_FPCamera : vp_Component
 	protected override void LateUpdate()
 	{
 
-		base.LateUpdate();
+        if (!m_AllowInput)
+            return;
+
+        base.LateUpdate();
 
 		if (Time.timeScale == 0.0f)
 			return;

@@ -11,6 +11,23 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1353791230087076}
   m_IsPrefabParent: 1
+--- !u!1 &1019905902116910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4115848729498268}
+  - component: {fileID: 65647996407171220}
+  - component: {fileID: 114253297783905236}
+  m_Layer: 0
+  m_Name: VaultTriggerBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1064383002701548
 GameObject:
   m_ObjectHideFlags: 1
@@ -957,6 +974,7 @@ Transform:
   - {fileID: 4945833983430206}
   - {fileID: 4352203545148916}
   - {fileID: 4299751492693450}
+  - {fileID: 4115848729498268}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -972,6 +990,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4335568996402810}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4115848729498268
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1019905902116910}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4101131822302366}
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4124237500163670
 Transform:
@@ -2459,6 +2490,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65647996407171220
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1019905902116910}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 51.46106, y: 10.353786, z: 51.203247}
+  m_Center: {x: -1.2898026, y: 4.676893, z: 25.101627}
 --- !u!65 &65926108168146236
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -4447,6 +4490,17 @@ MonoBehaviour:
   wires: {fileID: 4735005868124850}
   wirePrefab: {fileID: 1601825697369482, guid: ea41b1585f3dad84c98538b5baacb0c0, type: 2}
   wireWaypoint: {fileID: 4470359719546800}
+--- !u!114 &114253297783905236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1019905902116910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f197934c7fdc30445a96c5507b6c0baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114277180581888330
 MonoBehaviour:
   m_ObjectHideFlags: 1

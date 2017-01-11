@@ -2,19 +2,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelTimerHandler : MonoBehaviour
+public class LevelTimerHandler : BaseMonoBehaviour
 {
     [SerializeField]
     private Text levelTimerText;
+    private bool isTrackingTimer;
 
     private void OnEnable()
     {
-        EventManager.StartListening("RunLevelTimer", UpdateLevelTimer);
+        EventManager.StartListening("StartLevel", StartLevel);
+        EventManager.StartListening("EndLevel", EndLevel);
     }
 
     private void OnDisable()
     {
-        EventManager.StopListening("RunLevelTimer", UpdateLevelTimer);
+        EventManager.StopListening("StartLevel", StartLevel);
+        EventManager.StopListening("EndLevel", EndLevel);
     }
 
     private void Start()
@@ -25,6 +28,23 @@ public class LevelTimerHandler : MonoBehaviour
     void Init()
     {
         UpdateLevelTimer();
+    }
+
+    void StartLevel()
+    {
+        isTrackingTimer = true;
+    }
+
+    void EndLevel()
+    {
+        isTrackingTimer = false;
+        levelTimerText.color = Color.white;
+    }
+
+    public override void UpdateNormal()
+    {
+        if (isTrackingTimer)
+            UpdateLevelTimer();
     }
 
     /// <summary>

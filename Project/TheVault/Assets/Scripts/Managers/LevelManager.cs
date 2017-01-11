@@ -41,14 +41,14 @@ public class LevelManager : MonoSingleton<LevelManager>
     {
         EventManager.StartListening("SetupLevel", SetupLevel);
         EventManager.StartListening("StartLevel", StartLevel);
-        EventManager.StartListening("EndLevel", EndLevel);
+        EventManager.StartListening("ExittedLevel", EndLevel);   
     }
 
     private void OnDisable()
     {
         EventManager.StopListening("SetupLevel", SetupLevel);
         EventManager.StopListening("StartLevel", StartLevel);
-        EventManager.StopListening("EndLevel", EndLevel);
+        EventManager.StopListening("ExittedLevel", EndLevel);
     }
 
     void SetupLevel()
@@ -56,6 +56,14 @@ public class LevelManager : MonoSingleton<LevelManager>
         //Load In Player
         if (!player)
             player = Instantiate(playerPrefab, playerSpawnPoint.position, Quaternion.identity) as GameObject;
+        else
+        {
+            player.transform.position = playerSpawnPoint.position;
+            player.transform.rotation = Quaternion.identity;
+        }
+
+        if (level)
+            Destroy(level);
 
         //Load in Level
         level = Instantiate(currentLevel.LevelPrefab, currentLevel.LevelPrefab.transform.position, Quaternion.identity) as GameObject;
@@ -78,8 +86,9 @@ public class LevelManager : MonoSingleton<LevelManager>
     /// </summary>
     void EndLevel()
     {
-        levelClock.isRunning = false;
-        Debug.Log("End Level");
+        levelClock.isRunning = false;        
+        levelClock.timer = 0;
+        
     }
 
     public override void UpdateNormal()
@@ -93,11 +102,10 @@ public class LevelManager : MonoSingleton<LevelManager>
         levelClock.timer -= Time.fixedDeltaTime;
         EventManager.TriggerEvent("RunLevelTimer");
 
-        if(levelClock.timer < 0)
+        if (levelClock.timer <= 0)
         {
-            Debug.Log("Level Over");
-            levelClock.isRunning = false;
-            levelClock.timer = 0;
+            EndLevel();
+            EventManager.TriggerEvent("EndLevel");
         }
     }
     

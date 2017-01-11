@@ -1436,7 +1436,6 @@ public class ac_FPParkour : vp_Component
 			m_Player.WallRun.TryStop();
 
 			m_Controller.AddForce (m_WallRunDismountDirection * WallRunDismountForce);
-			Debug.Log("run out of time");
 			return;
 		}
 

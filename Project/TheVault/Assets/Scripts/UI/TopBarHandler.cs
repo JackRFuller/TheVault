@@ -15,11 +15,13 @@ public class TopBarHandler : BaseMonoBehaviour
     private void OnEnable()
     {
         EventManager.StartListening("OpenVault", TurnOnTopBar);
+        EventManager.StartListening("ExittedLevel", TurnOffTopBar);
     }
 
     private void OnDisable()
     {
         EventManager.StopListening("OpenVault", TurnOnTopBar);
+        EventManager.StopListening("ExittedLevel", TurnOffTopBar);
     }
 
     private void Start()

@@ -75,8 +75,7 @@ public class BankedCashHanlder : BaseMonoBehaviour
         float[] percentages = new float[3];
         for (int i = 0; i < starTargets.Length; i++)
         {
-            percentages[i] = starTargets[i] / starTargets[2];
-            Debug.Log(percentages[i]);
+            percentages[i] = starTargets[i] / starTargets[2];            
         }
 
         RectTransform bar = bankedCashBar.GetComponent<RectTransform>();
