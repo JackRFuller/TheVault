@@ -7,10 +7,11 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Floor
-  m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION
+  m_Shader: {fileID: 4800000, guid: 58f7b3d257d0e7f4d84a010e5a6f243d, type: 3}
+  m_ShaderKeywords: _AA_ON _CHANNEL_UV3 _EMISSION _MODE_DEFAULT _WLIGHT_SURFACE _WSTYLE_DEFAULT
+    _WUV_UV0
   m_LightmapFlags: 1
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -75,10 +76,31 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - first:
+        name: _WMask
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _WTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - first:
+        name: _AASmooth
+      second: 1.5
     - first:
         name: _BumpScale
       second: 1
+    - first:
+        name: _Channel
+      second: 0
+    - first:
+        name: _Cull
+      second: 2
     - first:
         name: _Cutoff
       second: 0.5
@@ -89,6 +111,30 @@ Material:
         name: _DstBlend
       second: 0
     - first:
+        name: _FDist
+      second: 0.1
+    - first:
+        name: _FMode
+      second: 1
+    - first:
+        name: _FPow
+      second: 5
+    - first:
+        name: _Fade
+      second: 0
+    - first:
+        name: _Fold
+      second: 1
+    - first:
+        name: _GDist
+      second: 0.35
+    - first:
+        name: _GEmission
+      second: 0
+    - first:
+        name: _GPower
+      second: 0.5
+    - first:
         name: _GlossMapScale
       second: 1
     - first:
@@ -96,6 +142,12 @@ Material:
       second: 0.9
     - first:
         name: _GlossyReflections
+      second: 1
+    - first:
+        name: _Glow
+      second: 0
+    - first:
+        name: _Limits
       second: 1
     - first:
         name: _Metallic
@@ -122,6 +174,42 @@ Material:
         name: _UVSec
       second: 0
     - first:
+        name: _WEmission
+      second: 0.57
+    - first:
+        name: _WGloss
+      second: 0
+    - first:
+        name: _WInvert
+      second: 0
+    - first:
+        name: _WLight
+      second: 0
+    - first:
+        name: _WMetal
+      second: 1
+    - first:
+        name: _WMode
+      second: 0
+    - first:
+        name: _WOpacity
+      second: 1
+    - first:
+        name: _WParam
+      second: 0
+    - first:
+        name: _WStyle
+      second: 0
+    - first:
+        name: _WThickness
+      second: 0.00594
+    - first:
+        name: _WTransparency
+      second: 1
+    - first:
+        name: _WUV
+      second: 0
+    - first:
         name: _ZWrite
       second: 1
     m_Colors:
@@ -132,5 +220,11 @@ Material:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
+        name: _GColor
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
         name: _SpecColor
       second: {r: 0.09558821, g: 0.09558821, b: 0.09558821, a: 1}
+    - first:
+        name: _WColor
+      second: {r: 1, g: 1, b: 1, a: 1}
