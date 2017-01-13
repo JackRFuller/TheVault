@@ -84,8 +84,8 @@ public class EndLevelScreenHandler : BaseMonoBehaviour
 
     void RevealEndScreen()
     {
-        totalCollectedCash = LevelManager.Instance.CollectionTotal;
-        timeRemaining = LevelManager.Instance.LevelTimer.timer;
+        totalCollectedCash = LevelManager.MoneyCollected;
+        timeRemaining = LevelManager.LevelTimer;
         hasCollectedValuable = LevelManager.Instance.HasCollectedValuable;
         starTargets = LevelManager.Instance.CurrentLevel.StarRatingTargets;
 

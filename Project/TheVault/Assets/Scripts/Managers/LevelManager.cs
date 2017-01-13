@@ -9,24 +9,6 @@ public class LevelManager : MonoSingleton<LevelManager>
     private LevelData currentLevel; //Holds Current Level Data
     public LevelData CurrentLevel { get { return currentLevel; } }
 
-    private float collectionTotal = 0; //Tracks how much players have in their current collection
-    public float CollectionTotal { get { return collectionTotal; } }
-
-    private float bankedTotal;
-    public float BankedTotal { get { return bankedTotal; } }
-
-    private bool hasCollectedValuable; //tracks if player has collected valuable    
-    public bool HasCollectedValuable { get { return hasCollectedValuable; } }
-    
-    //Level Clock
-    private LevelClock levelClock;
-    public LevelClock LevelTimer { get { return levelClock; } }
-    public struct LevelClock
-    {
-        public float timer;
-        public bool isRunning;
-    }
-
     [Header("Player")]
     [SerializeField]
     private GameObject playerPrefab;
@@ -36,6 +18,20 @@ public class LevelManager : MonoSingleton<LevelManager>
 
     //Level
     private GameObject level;
+
+    //Timer Variables
+    private static float levelTimer;
+    public static float LevelTimer { get { return levelTimer; } }
+    private bool isLevelTimerRunning = false;  
+
+    //Money Variables
+    private static int moneyCollected;
+    public static int MoneyCollected { get { return moneyCollected; } }
+
+    //Valuable variables
+    private bool hasCollectedValuable; //tracks if player has collected valuable    
+    public bool HasCollectedValuable { get { return hasCollectedValuable; } }
+
 
     private void OnEnable()
     {
@@ -68,7 +64,7 @@ public class LevelManager : MonoSingleton<LevelManager>
         //Load in Level
         level = Instantiate(currentLevel.LevelPrefab, currentLevel.LevelPrefab.transform.position, Quaternion.identity) as GameObject;
 
-        levelClock.timer = currentLevel.LevelStartingTime;
+        levelTimer = currentLevel.LevelStartingTime;
 
         EventManager.TriggerEvent("OpenVault");  
     }
@@ -78,7 +74,7 @@ public class LevelManager : MonoSingleton<LevelManager>
     /// </summary>
     void StartLevel()
     {
-        levelClock.isRunning = true;
+        isLevelTimerRunning = true;
     }
 
     /// <summary>
@@ -86,23 +82,21 @@ public class LevelManager : MonoSingleton<LevelManager>
     /// </summary>
     void EndLevel()
     {
-        levelClock.isRunning = false;        
-        levelClock.timer = 0;
-        
+        isLevelTimerRunning = false;
     }
 
     public override void UpdateNormal()
     {
-        if (levelClock.isRunning)
+        if(isLevelTimerRunning)
             RunLevelTimer();       
     }
 
     void RunLevelTimer()
     {
-        levelClock.timer -= Time.fixedDeltaTime;
+        levelTimer -= Time.fixedDeltaTime;
         EventManager.TriggerEvent("RunLevelTimer");
 
-        if (levelClock.timer <= 0)
+        if (levelTimer <= 0)
         {
             EndLevel();
             EventManager.TriggerEvent("EndLevel");
@@ -116,7 +110,7 @@ public class LevelManager : MonoSingleton<LevelManager>
     /// <param name="value"></param>
     public void AddToCollection(int value)
     {
-        collectionTotal += value;
+        moneyCollected += value;
         EventManager.TriggerEvent("CollectedMoney");          
     }
 
