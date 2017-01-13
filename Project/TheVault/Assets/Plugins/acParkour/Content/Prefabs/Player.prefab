@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 11400064}
   - component: {fileID: 114929044581120658}
   - component: {fileID: 114954865447859756}
+  - component: {fileID: 114154964023638650}
   m_Layer: 30
   m_Name: Player
   m_TagString: Player
@@ -2399,7 +2400,7 @@ MonoBehaviour:
   ParkourArmClimbAnim: {fileID: 7400000, guid: a93c9a4b3f02c0b4cbe469bc899f6468, type: 3}
   ParkourArmPos: {x: 0, y: 0, z: 0}
   DashCooldown: 1
-  MotorDashForce: 0.3
+  MotorDashForce: 0.5
   DashCount: 1
   DashRecoverSpeed: 0
   DashSensitivtiy: 0.25
@@ -2408,7 +2409,7 @@ MonoBehaviour:
   WallJumpForce: 0.1
   WallJumpUpForce: 0.15
   WallJumpCount: 2
-  StopWallRunIfEmpty: 1
+  StopWallRunIfEmpty: 0
   WallJumpInfinite: 0
   IgnoreWallHangTag: 
   WallHangDuration: 0
@@ -2571,14 +2572,14 @@ MonoBehaviour:
     StatesToBlock: 
   - TypeName: vp_FPInput
     Name: Default
-    TextAsset: {fileID: 0}
+    TextAsset: {fileID: 4900000, guid: d7d3abd6b74e56c458afd2eed9cdc4d0, type: 3}
     StatesToBlock: 
   Children: []
   Siblings: []
   Family: []
   Renderers: []
   AudioSources: []
-  MouseLookSensitivity: {x: 5, y: 5}
+  MouseLookSensitivity: {x: 3, y: 3}
   MouseLookSmoothSteps: 10
   MouseLookSmoothWeight: 0.5
   MouseLookAcceleration: 0
@@ -2606,25 +2607,13 @@ MonoBehaviour:
   Persist: 0
   States:
   - TypeName: vp_FPController
-    Name: Dead
-    TextAsset: {fileID: 4900000, guid: e222cb90f03cc1d42b1b55ca715abf56, type: 3}
-    StatesToBlock: 040000000500000001000000
-  - TypeName: vp_FPController
-    Name: MegaSpeed
-    TextAsset: {fileID: 4900000, guid: 3b5f9829c5b658548b1880cec7bf5da9, type: 3}
-    StatesToBlock: 
-  - TypeName: vp_FPController
-    Name: Freeze
-    TextAsset: {fileID: 4900000, guid: 09de3ba1cb6297c40a443e98bb566ef1, type: 3}
-    StatesToBlock: 
-  - TypeName: vp_FPController
     Name: GroundSlide
     TextAsset: {fileID: 4900000, guid: f780006dd5ba7fd49a13ae89c934157f, type: 3}
-    StatesToBlock: 05000000
+    StatesToBlock: 02000000
   - TypeName: vp_FPController
     Name: Crouch
     TextAsset: {fileID: 4900000, guid: 85c004e9481eb834b8de594586709c2b, type: 3}
-    StatesToBlock: 0100000005000000
+    StatesToBlock: 02000000
   - TypeName: vp_FPController
     Name: Run
     TextAsset: {fileID: 4900000, guid: 70cc091c4fbd40a409cbcab27066f081, type: 3}
@@ -2632,14 +2621,14 @@ MonoBehaviour:
   - TypeName: vp_FPController
     Name: WallRun
     TextAsset: {fileID: 4900000, guid: 4d6de95b6ba78894c80a2535271108ba, type: 3}
-    StatesToBlock: 050000000400000003000000
+    StatesToBlock: 020000000100000000000000
   - TypeName: vp_FPController
     Name: WallHang
     TextAsset: {fileID: 4900000, guid: c7f678dc763f7d946932dd61da25f644, type: 3}
-    StatesToBlock: 04000000030000000600000005000000
+    StatesToBlock: 01000000000000000300000002000000
   - TypeName: vp_FPController
     Name: Default
-    TextAsset: {fileID: 0}
+    TextAsset: {fileID: 4900000, guid: 3cb9a067d55a0b04b9f519c3ad33c790, type: 3}
     StatesToBlock: 
   Children: []
   Siblings: []
@@ -2656,8 +2645,8 @@ MonoBehaviour:
   PhysicsCrouchHeightModifier: 0.5
   PositionOnPlatform: {x: 0, y: 0, z: 0}
   PhysicsHasCollisionTrigger: 1
-  MotorAcceleration: 0.18
-  MotorDamping: 0.17
+  MotorAcceleration: 1
+  MotorDamping: 0.18
   MotorBackwardsSpeed: 0.65
   MotorAirSpeed: 0.35
   MotorSlopeSpeedUp: 1
@@ -2666,7 +2655,7 @@ MonoBehaviour:
   MotorJumpForceDamping: 0.08
   MotorJumpForceHold: 0.003
   MotorJumpForceHoldDamping: 0.5
-  PhysicsForceDamping: 0.05
+  PhysicsForceDamping: 0.223
   PhysicsSlopeSlideLimit: 30
   PhysicsSlopeSlidiness: 0.15
   PhysicsWallBounce: 0
@@ -3048,6 +3037,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EffectMaterial: {fileID: 2100000, guid: 0d9079b2a57addc42bc122b2732e59b1, type: 2}
   maxScanDistance: 100
+--- !u!114 &114154964023638650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a91bd33c4cf0941a77b26ab287b270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slowDownAmount: 2.5
+  slowDownRechargeRate: 1
+  slowDownCooldownRate: 2
 --- !u!114 &114458641372734608
 MonoBehaviour:
   m_ObjectHideFlags: 1

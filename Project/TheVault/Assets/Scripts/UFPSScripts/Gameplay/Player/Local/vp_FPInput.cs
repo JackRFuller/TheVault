@@ -95,34 +95,13 @@ public class vp_FPInput : vp_Component
 	protected override void Update()
 	{
         if (!m_AllowGameplayInput)
-            return;
-
-        // manage input for GUI
-        //UpdateCursorLock();
-
-		// toggle pausing and abort if paused
-		UpdatePause();
-
-		if (FPPlayer.Pause.Get() == true)
-			return;
-
-		// --- NOTE: everything below this line will be disabled on pause! ---
-
-		
-
-		// interaction
-		InputInteract();
+            return; 
 
 		// manage input for moving
 		InputMove();
 		InputRun();
 		InputJump();
-		InputCrouch();
-
-		// manage input for weapons
-		InputAttack();
-		InputReload();
-		InputSetWeapon();
+		InputCrouch();		
 
 		// manage camera related input
 		InputCamera();
@@ -133,21 +112,6 @@ public class vp_FPInput : vp_Component
     {
         m_AllowGameplayInput = false;
     }
-
-	/// <summary>
-	/// handles interaction with the game world
-	/// </summary>
-	protected virtual void InputInteract()
-	{
-
-		if (vp_Input.GetButtonDown("Interact"))
-			FPPlayer.Interact.TryStart();
-		else
-			FPPlayer.Interact.TryStop();
-
-	}
-
-
 	/// <summary>
 	/// move the player forward, backward, left and right
 	/// </summary>
@@ -173,24 +137,17 @@ public class vp_FPInput : vp_Component
 	protected virtual void InputRun()
 	{
         FPPlayer.Run.TryStart();
-  //      if (vp_Input.GetButton("Run")
-		//	  || vp_Input.GetAxisRaw("LeftTrigger") > 0.5f		// sprint using the left gamepad trigger
-		//	)
-		//	FPPlayer.Run.TryStart();
-		//else
-		//	FPPlayer.Run.TryStop();
-
-	}
+    }
 
 
-	/// <summary>
-	/// ask controller to jump when button is pressed (the current
-	/// controller preset determines jump force).
-	/// NOTE: if its 'MotorJumpForceHold' is non-zero, this
-	/// also makes the controller accumulate jump force until
-	/// button release.
-	/// </summary>
-	protected virtual void InputJump()
+    /// <summary>
+    /// ask controller to jump when button is pressed (the current
+    /// controller preset determines jump force).
+    /// NOTE: if its 'MotorJumpForceHold' is non-zero, this
+    /// also makes the controller accumulate jump force until
+    /// button release.
+    /// </summary>
+    protected virtual void InputJump()
 	{
 
 		// TIP: to find out what determines if 'Jump.TryStart'
@@ -240,184 +197,49 @@ public class vp_FPInput : vp_Component
 	protected virtual void InputCamera()
 	{
 
-		// zoom / ADS
-		if (vp_Input.GetButton("Zoom"))
-			FPPlayer.Zoom.TryStart();
-		else
-			FPPlayer.Zoom.TryStop();
+		//// zoom / ADS
+		//if (vp_Input.GetButton("Zoom"))
+		//	FPPlayer.Zoom.TryStart();
+		//else
+		//	FPPlayer.Zoom.TryStop();
 
-		// toggle 3rd person mode
-		if (vp_Input.GetButtonDown("Toggle3rdPerson"))
-			FPPlayer.CameraToggle3rdPerson.Send();
-
-	}
-
-
-	/// <summary>
-	/// broadcasts a message to any listening components telling
-	/// them to go into 'attack' mode. vp_FPWeaponShooter uses this
-	/// to repeatedly fire the current weapon while the fire button
-	/// is being pressed, but it could also be used by, for example,
-	/// an animation script to make the player model loop an 'attack
-	/// stance' animation.
-	/// </summary>
-	protected virtual void InputAttack()
-	{
-
-		// TIP: you could do this to prevent player from attacking while running
-		//if (Player.Run.Active)
-		//	return;
-
-		// if mouse cursor is visible, an extra click is needed
-		// before we can attack
-		if (!vp_Utility.LockCursor)
-			return;
-
-		if (vp_Input.GetButton("Attack")
-			  || vp_Input.GetAxisRaw("RightTrigger") > 0.5f		// fire using the right gamepad trigger
-			)
-			FPPlayer.Attack.TryStart();
-		else
-			FPPlayer.Attack.TryStop();
+		//// toggle 3rd person mode
+		//if (vp_Input.GetButtonDown("Toggle3rdPerson"))
+		//	FPPlayer.CameraToggle3rdPerson.Send();
 
 	}
 
 
-	/// <summary>
-	/// when the reload button is pressed, broadcasts a message
-	/// to any listening components asking them to reload
-	/// NOTE: reload may not succeed due to ammo status etc.
-	/// </summary>
-	protected virtual void InputReload()
-	{
+    /// <summary>
+    /// broadcasts a message to any listening components telling
+    /// them to go into 'attack' mode. vp_FPWeaponShooter uses this
+    /// to repeatedly fire the current weapon while the fire button
+    /// is being pressed, but it could also be used by, for example,
+    /// an animation script to make the player model loop an 'attack
+    /// stance' animation.
+    /// </summary>
+    //protected virtual void InputAttack()
+    //{
 
-		if (vp_Input.GetButtonDown("Reload"))
-			FPPlayer.Reload.TryStart();
+    //    TIP: you could do this to prevent player from attacking while running
 
-	}
+    //    if (Player.Run.Active)
+    //            return;
 
+    //    if mouse cursor is visible, an extra click is needed
+    //    before we can attack
 
-	/// <summary>
-	/// handles cycling through carried weapons, wielding specific
-	/// ones and clearing the current one
-	/// </summary>
-	protected virtual void InputSetWeapon()
-	{
+    //    if (!vp_Utility.LockCursor)
+    //        return;
 
-		// --- cycle to the next or previous weapon ---
+    //    if (vp_Input.GetButton("Attack")
+    //          || vp_Input.GetAxisRaw("RightTrigger") > 0.5f     // fire using the right gamepad trigger
+    //        )
+    //        FPPlayer.Attack.TryStart();
+    //    else
+    //        FPPlayer.Attack.TryStop();
 
-		if (vp_Input.GetButtonDown("SetPrevWeapon"))
-			FPPlayer.SetPrevWeapon.Try();
-
-		if (vp_Input.GetButtonDown("SetNextWeapon"))
-			FPPlayer.SetNextWeapon.Try();
-
-		// --- switch to weapon 1-10 by direct button press ---
-
-		if (vp_Input.GetButtonDown("SetWeapon1")) FPPlayer.SetWeapon.TryStart(1);
-		if (vp_Input.GetButtonDown("SetWeapon2")) FPPlayer.SetWeapon.TryStart(2);
-		if (vp_Input.GetButtonDown("SetWeapon3")) FPPlayer.SetWeapon.TryStart(3);
-		if (vp_Input.GetButtonDown("SetWeapon4")) FPPlayer.SetWeapon.TryStart(4);
-		if (vp_Input.GetButtonDown("SetWeapon5")) FPPlayer.SetWeapon.TryStart(5);
-		if (vp_Input.GetButtonDown("SetWeapon6")) FPPlayer.SetWeapon.TryStart(6);
-		if (vp_Input.GetButtonDown("SetWeapon7")) FPPlayer.SetWeapon.TryStart(7);
-		if (vp_Input.GetButtonDown("SetWeapon8")) FPPlayer.SetWeapon.TryStart(8);
-		if (vp_Input.GetButtonDown("SetWeapon9")) FPPlayer.SetWeapon.TryStart(9);
-		if (vp_Input.GetButtonDown("SetWeapon10")) FPPlayer.SetWeapon.TryStart(10);
-
-		// --- unwield current weapon by direct button press ---
-
-		if (vp_Input.GetButtonDown("ClearWeapon")) FPPlayer.SetWeapon.TryStart(0);
-
-	}
-
-
-	/// <summary>
-	/// toggles the game's pause state on / off
-	/// </summary>
-	protected virtual void UpdatePause()
-	{
-
-		if (vp_Input.GetButtonDown("Pause"))
-			FPPlayer.Pause.Set(!FPPlayer.Pause.Get());
-
-	}
-
-
-	/// <summary>
-	/// this method handles toggling between mouse pointer and
-	/// firing modes. it can be used to deal with screen regions
-	/// for button menus, inventory panels et cetera.
-	/// NOTE: if your game supports multiple screen resolutions,
-	/// make sure your 'MouseCursorZones' are always adapted to
-	/// the current resolution. see 'vp_FPSDemo1.Start' for one
-	/// example of how to this
-	/// </summary>
-	protected virtual void UpdateCursorLock()
-	{
-
-		// store the current mouse position as GUI coordinates
-		m_MousePos.x = Input.mousePosition.x;
-		m_MousePos.y = (Screen.height - Input.mousePosition.y);
-
-		// uncomment this line to print the current mouse position
-		//Debug.Log("X: " + (int)m_MousePos.x + ", Y:" + (int)m_MousePos.y);
-
-		// if 'ForceCursor' is active, the cursor will always be visible
-		// across the whole screen and firing will be disabled
-		if (MouseCursorForced)
-		{
-			if (vp_Utility.LockCursor)
-				vp_Utility.LockCursor = false;
-			return;
-		}
-
-		// see if any of the mouse buttons are being held down
-		if (Input.GetMouseButton(0) || Input.GetMouseButton(1) || Input.GetMouseButton(2))
-		{
-
-			// if we have defined mouse cursor zones, check to see if the
-			// mouse cursor is inside any of them
-			if (MouseCursorZones.Length > 0)
-			{
-				foreach (Rect r in MouseCursorZones)
-				{
-					if (r.Contains(m_MousePos))
-					{
-						// mouse is being held down inside a mouse cursor zone, so make
-						// sure the cursor is not locked and don't lock it this frame
-						if (vp_Utility.LockCursor)
-							vp_Utility.LockCursor = false;
-						goto DontLock;
-					}
-				}
-			}
-
-			// no zones prevent firing the current weapon. hide mouse cursor
-			// and lock it at the center of the screen
-			if (!vp_Utility.LockCursor)
-				vp_Utility.LockCursor = true;
-
-		}
-
-	DontLock:
-
-		// if user presses 'ENTER', toggle mouse cursor on / off
-		if (vp_Input.GetButtonUp("Accept1")
-			|| vp_Input.GetButtonUp("Accept2")
-			|| vp_Input.GetButtonUp("Menu")
-			)
-		{
-#if UNITY_EDITOR && UNITY_5
-			if(Input.GetKeyUp(KeyCode.Escape))
-				vp_Utility.LockCursor = false;
-			else
-#endif
-			vp_Utility.LockCursor = !vp_Utility.LockCursor;
-		}
-
-	}
-
+    //}
 
 	/// <summary>
 	/// mouselook implementation with smooth filtering and acceleration

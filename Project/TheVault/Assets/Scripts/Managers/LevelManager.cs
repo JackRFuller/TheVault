@@ -108,7 +108,7 @@ public class LevelManager : MonoSingleton<LevelManager>
 
     void RunLevelTimer()
     {
-        levelTimer -= Time.fixedDeltaTime;
+        levelTimer -= Time.fixedDeltaTime * Time.timeScale;
         EventManager.TriggerEvent("RunLevelTimer");
 
         if (levelTimer <= 0)

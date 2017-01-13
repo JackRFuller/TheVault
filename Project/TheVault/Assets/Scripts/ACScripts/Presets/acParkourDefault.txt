@@ -4,8 +4,8 @@
 
 ComponentType vp_FPController
 PhysicsHasCollisionTrigger True
-MotorAcceleration 1
-MotorDamping 0.17
+MotorAcceleration 0.5
+MotorDamping 0.18
 MotorBackwardsSpeed 0.65
 MotorAirSpeed 0.35
 MotorSlopeSpeedUp 1

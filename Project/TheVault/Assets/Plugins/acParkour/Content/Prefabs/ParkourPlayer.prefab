@@ -1445,7 +1445,7 @@ MonoBehaviour:
   SpawnOnAwake: 0
   SpawnSound: {fileID: 8300000, guid: c6ffb5ccbd00a114494143e33e747a05, type: 3}
   SpawnFXPrefabs: []
-  helpbox: 166
+  helpbox: 133
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1

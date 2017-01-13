@@ -54,7 +54,7 @@ MonoBehaviour:
         maxDistance: 67
         iterationCount: 256
         stepSize: 3
-        widthModifier: 7.92
+        widthModifier: 0.01
         reflectionBlur: 1
         reflectBackfaces: 0
       intensity:
@@ -63,7 +63,7 @@ MonoBehaviour:
         fresnelFade: 1
         fresnelFadePower: 1
       screenEdgeMask:
-        intensity: 0.03
+        intensity: 1
   depthOfField:
     m_Enabled: 0
     m_Settings:
@@ -75,7 +75,7 @@ MonoBehaviour:
   motionBlur:
     m_Enabled: 0
     m_Settings:
-      shutterAngle: 270
+      shutterAngle: 147
       sampleCount: 10
       frameBlending: 0
   eyeAdaptation:

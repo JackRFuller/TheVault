@@ -10,6 +10,10 @@ public class PlayerInteractionHandler : BaseMonoBehaviour
     [SerializeField]
     private Camera playerCamera;
 
+    //Lock
+    private LockHandler lockHandler;
+    private bool hasInteractionObject;
+
 
 	// Use this for initialization
 	void Start ()
@@ -39,17 +43,53 @@ public class PlayerInteractionHandler : BaseMonoBehaviour
            {
                 if(ReturnDistance(hit.transform.position,transform.position) <= lockDistance)
                 {
-                    WaitForLockInput(hit.collider.gameObject);
+                    GetLock(hit.collider.gameObject);
+                }
+                else
+                {
+                    RemoveInteractableObjects();
                 }
            }
+           else
+            {
+                RemoveInteractableObjects();
+            }
+        }
+        else
+        {
+            RemoveInteractableObjects();
         }
     } 
-    
-    private void WaitForLockInput(GameObject lockObj)
+
+    private void RemoveInteractableObjects()
     {
-        if (ExtensionMethods.GetPlayerInteractionInput())
+        lockHandler = null;
+
+        if (hasInteractionObject)
         {
-            lockObj.SendMessage("RemoveLock", SendMessageOptions.DontRequireReceiver);            
+            EventManager.TriggerEvent("NoInteraction");
+            hasInteractionObject = false;
+        }
+    }
+    
+    private void GetLock(GameObject lockObj)
+    {
+        if(lockHandler == null || lockHandler != lockObj.GetComponent<LockHandler>())
+        {
+            lockHandler = lockObj.GetComponent<LockHandler>();
+        }
+        else
+        {
+            if(!hasInteractionObject)
+            {
+                EventManager.TriggerEvent("InteractableObject");
+                hasInteractionObject = true;
+            }
+
+            if (ExtensionMethods.GetPlayerInteractionInput())
+            {
+                lockHandler.RemoveLock();                
+            }
         }
     }   
 

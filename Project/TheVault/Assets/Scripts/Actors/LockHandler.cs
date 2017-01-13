@@ -39,7 +39,7 @@ public class LockHandler : BaseMonoBehaviour
        
     }
 
-    private void RemoveLock()
+    public void RemoveLock()
     {
         if (!lockAudioSource.isPlaying)
             lockAudioSource.Play();

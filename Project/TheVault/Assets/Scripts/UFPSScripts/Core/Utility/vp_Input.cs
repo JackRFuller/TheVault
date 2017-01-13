@@ -252,8 +252,7 @@ public class vp_Input : MonoBehaviour
 				AddUnityAxis("Mouse Y");
 				AddUnityAxis("Horizontal");
 				AddUnityAxis("Vertical");
-				AddUnityAxis("LeftTrigger");
-				AddUnityAxis("RightTrigger");
+				AddUnityAxis("LeftTrigger");				
 			}
 		}
 		
