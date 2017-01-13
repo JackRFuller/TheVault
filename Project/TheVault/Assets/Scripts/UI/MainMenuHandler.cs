@@ -11,6 +11,8 @@ public class MainMenuHandler : BaseMonoBehaviour
     [SerializeField]
     private Camera menuCamera;
     [SerializeField]
+    private AudioListener cameraAudioListener;
+    [SerializeField]
     private GameObject menuObj;
 
     [Header("Top Level Menu Options")]
@@ -25,8 +27,22 @@ public class MainMenuHandler : BaseMonoBehaviour
     [SerializeField]
     private Text[] targetScoreTexts;
 
+    private void OnEnable()
+    {
+        EventManager.StartListening("ResetLevel", Init);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening("ResetLevel", Init);
+    }
 
     private void Start()
+    {
+        Init();
+    }
+
+    void Init()
     {
         GetLevel();
         InitializeLevelMenu();
@@ -40,6 +56,8 @@ public class MainMenuHandler : BaseMonoBehaviour
     private void InitializeLevelMenu()
     {
         menuCamera.enabled = true;
+        cameraAudioListener.enabled = true;
+
         levelTitleText.text = currentLevel.LevelTitle;
 
         //Show Target Scores
@@ -49,6 +67,8 @@ public class MainMenuHandler : BaseMonoBehaviour
             string targetScore = "$" + targetScores[i].ToString();
             targetScoreTexts[i].text = targetScore;
         }
+
+        menuObj.SetActive(true);
     }
 
     public void OnClickLoadInLevel()
@@ -60,7 +80,9 @@ public class MainMenuHandler : BaseMonoBehaviour
     private void TurnOffMainMenu()
     {
         menuCamera.enabled = false;
+        cameraAudioListener.enabled = false;
         menuObj.SetActive(false);
+        Debug.Log("Turn Off");
     }
 
     private void InitialiseLevel()

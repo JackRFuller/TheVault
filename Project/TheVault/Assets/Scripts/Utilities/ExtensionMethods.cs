@@ -43,6 +43,15 @@ public class ExtensionMethods : MonoBehaviour
         anim.SetTrigger(triggerName);
     }
 
+    public static void ResetTriggerAnimations(Animator anim)
+    {
+        for(int i = 0; i < anim.parameterCount; i++)
+        {
+            if (anim.parameters[i].type == AnimatorControllerParameterType.Trigger)
+                anim.ResetTrigger(anim.parameters[i].name);
+        }
+    }
+
     #endregion
 }
 

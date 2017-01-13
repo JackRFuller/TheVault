@@ -53,6 +53,7 @@ public class FailureScreenHandler : BaseMonoBehaviour
         secondaryScreenObj.SetActive(false);
 
         rebootBarImage.fillAmount = 0;
+        isFillingUpBar = false;
     }
 
     void StartRebootingProcess()
@@ -82,12 +83,13 @@ public class FailureScreenHandler : BaseMonoBehaviour
         if(percentageComplete >= 1.0f)
         {
             TurnOffFailureScreen();
+            EventManager.TriggerEvent("ResetLevel");
         }
     }
 
     public void OnClickReboot()
     {
-        StartRebootingProcess();
+        StartRebootingProcess();        
     }
 
 }

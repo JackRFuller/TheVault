@@ -28,16 +28,25 @@ public class MoneyBarUIHandler : BaseMonoBehaviour
     private bool isLerping;
     private float currentMoneyValue;
 
+    //Money Bar Lerp Variables
+    private const float barLerpSpeed = 0.1f;
+    private float barTimeStarted;
+    private float barStartValue;
+    private float barTargetValue;
+    private bool isBarLerping;
+
     private void OnEnable()
     {
-        EventManager.StartListening("OpenVault", Init);
+        EventManager.StartListening("OpenVault", Init); //Turns On Bar
         EventManager.StartListening("CollectedMoney", AddMoneyToBar);
+        EventManager.StartListening("EndLevel", TurnOffBar); //Turns Off Bar
     }
 
     private void OnDisable()
     {
         EventManager.StopListening("OpenVault", Init);
         EventManager.StopListening("CollectedMoney", AddMoneyToBar);
+        EventManager.StopListening("EndLevel", TurnOffBar); //Turns Off Bar
     }
 
     private void Start()
@@ -67,11 +76,14 @@ public class MoneyBarUIHandler : BaseMonoBehaviour
     private void TurnOffBar()
     {
         moneyBarObjs.SetActive(false);
+        isBarLerping = false;
+        isLerping = false;
+        currentMoneyValue = 0;
     }
 
     private void TurnOnBar()
     {
-        moneyBarObjs.SetActive(true);
+        moneyBarObjs.SetActive(true);        
     }
 
    
@@ -83,13 +95,30 @@ public class MoneyBarUIHandler : BaseMonoBehaviour
         timeStarted = Time.time;
         isLerping = true;
 
+        //Setup Bar Lerp
+        barStartValue = moneyBar.fillAmount;
         //Work Out Percentage
+        if (numberOfStarsCollected == 0)
+        {
+            barTargetValue = LevelManager.MoneyCollected / starTargets[numberOfStarsCollected];
+        }
+        else
+        {
+            float difference = starTargets[numberOfStarsCollected] - starTargets[numberOfStarsCollected - 1];
+            float amountTowardsStar = LevelManager.MoneyCollected - starTargets[numberOfStarsCollected - 1];
+            barTargetValue = amountTowardsStar / difference;
+        }
+        barTimeStarted = Time.time;
+        isBarLerping = true;
     }
 
     public override void UpdateNormal()
     {
         if (isLerping)
             LerpMoney();
+
+        if (isBarLerping)
+            LerpBar();
     }
 
     void LerpMoney()
@@ -107,6 +136,33 @@ public class MoneyBarUIHandler : BaseMonoBehaviour
         {
             isLerping = false;
         }
+    }
+
+    void LerpBar()
+    {
+        float timeSinceStarted = Time.time - barTimeStarted;
+        float percentageComplete = timeSinceStarted / barLerpSpeed;
+
+        float fillAmount = Mathf.Lerp(barStartValue, barTargetValue, percentageComplete);
+        moneyBar.fillAmount = fillAmount;
+
+        if(percentageComplete >= 1.0f)
+        {
+            if(moneyBar.fillAmount >= 1.0f)
+            {
+                TurnOnStars(numberOfStarsCollected);
+                numberOfStarsCollected++;
+                moneyBar.fillAmount = 0;
+                
+            }
+
+            isBarLerping = false;
+        }
+    }
+
+    void TurnOnStars(int starIndex)
+    {
+        starImages[starIndex].enabled = true;
     }
 
 

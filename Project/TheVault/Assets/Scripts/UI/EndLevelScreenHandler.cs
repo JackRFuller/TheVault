@@ -137,7 +137,7 @@ public class EndLevelScreenHandler : BaseMonoBehaviour
         }
 
         yield return new WaitForSeconds(0.2f);
-        restartButtonObj.SetActive(true);
+        //restartButtonObj.SetActive(true);
         lobbyButtonObj.SetActive(true);
     }
 
@@ -172,6 +172,12 @@ public class EndLevelScreenHandler : BaseMonoBehaviour
     public void OnClickRestart()
     {
         Debug.Log("Restart");
+    }
+
+    public void OnClickReturnToLobby()
+    {
+        Init();
+        EventManager.TriggerEvent("ResetLevel");
     }
 
 

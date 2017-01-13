@@ -37,7 +37,9 @@ public class LevelManager : MonoSingleton<LevelManager>
     {
         EventManager.StartListening("SetupLevel", SetupLevel);
         EventManager.StartListening("StartLevel", StartLevel);
-        EventManager.StartListening("ExittedLevel", EndLevel);   
+        EventManager.StartListening("ExittedLevel", EndLevel);
+        EventManager.StartListening("ResetLevel", ResetLevel);
+
     }
 
     private void OnDisable()
@@ -45,6 +47,7 @@ public class LevelManager : MonoSingleton<LevelManager>
         EventManager.StopListening("SetupLevel", SetupLevel);
         EventManager.StopListening("StartLevel", StartLevel);
         EventManager.StopListening("ExittedLevel", EndLevel);
+        EventManager.StopListening("ResetLevel", ResetLevel);
     }
 
     void SetupLevel()
@@ -67,6 +70,18 @@ public class LevelManager : MonoSingleton<LevelManager>
         levelTimer = currentLevel.LevelStartingTime;
 
         EventManager.TriggerEvent("OpenVault");  
+    }
+
+    void ResetLevel()
+    {
+        if (player)
+            Destroy(player);
+
+        if (level)
+            Destroy(level);
+
+        levelTimer = 0;
+        moneyCollected = 0;
     }
 
     /// <summary>

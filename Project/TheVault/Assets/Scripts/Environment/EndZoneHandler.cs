@@ -9,16 +9,23 @@ public class EndZoneHandler : BaseMonoBehaviour
     private void OnEnable()
     {
         EventManager.StartListening("StartLevel", EnableEndZone);
+        EventManager.StartListening("ResetLevel", DisableEndZone);
     }
 
     private void OnDisable()
     {
         EventManager.StopListening("StartLevel", EnableEndZone);
+        EventManager.StopListening("ResetLevel", DisableEndZone);
     }
 
     private void Start()
     {
         endCollider = this.GetComponent<Collider>();
+        DisableEndZone();
+    }
+
+    private void DisableEndZone()
+    {
         endCollider.enabled = false;
         endCollider.isTrigger = false;
     }
@@ -40,5 +47,6 @@ public class EndZoneHandler : BaseMonoBehaviour
     private void EndLevel()
     {
         EventManager.TriggerEvent("ExittedLevel");
+        EventManager.TriggerEvent("EndLevel");
     }
 }

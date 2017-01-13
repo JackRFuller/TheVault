@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class TimerUIHandler : BaseMonoBehaviour
 {
+    //Components
+    private AudioSource timerAudio;
+
     [Header("UI Objects")]
     [SerializeField]
     private GameObject timerObj;
@@ -16,19 +19,25 @@ public class TimerUIHandler : BaseMonoBehaviour
     private Image timeIconImage;
 
     private bool isRunningTimer;
+    private bool isPlayingSiren;
+    private int sirenCount = 10;
 
     private void OnEnable()
     {
-        EventManager.StartListening("OpenVault", TurnOnTimer);
+        EventManager.StartListening("OpenVault", TurnOnTimer); //Turns on Bar
+        EventManager.StartListening("EndLevel", TurnOffTimer); //Turns off Bar
     }
 
     private void OnDisable()
     {
         EventManager.StopListening("OpenVault", TurnOnTimer);
+        EventManager.StopListening("EndLevel", TurnOffTimer); //Turns off Bar
     }
 
     private void Start()
     {
+        timerAudio = this.GetComponent<AudioSource>();
+
         TurnOffTimer();
     }
 
@@ -36,6 +45,10 @@ public class TimerUIHandler : BaseMonoBehaviour
     {
         timerObj.SetActive(false);
         isRunningTimer = false;
+
+        isPlayingSiren = false;
+        sirenCount = 0;
+        timerAudio.Stop();
     }
 
     private void TurnOnTimer()
@@ -45,6 +58,7 @@ public class TimerUIHandler : BaseMonoBehaviour
 
         timerObj.SetActive(true);
         isRunningTimer = true;
+        sirenCount = 10;
     }
 
     public override void UpdateNormal()
@@ -62,11 +76,26 @@ public class TimerUIHandler : BaseMonoBehaviour
 
         if (LevelManager.LevelTimer <= 10)
         {
+            if (!isPlayingSiren)
+                StartCoroutine(PlaySiren());
+
             if (timeText.color != Color.red)
             {
                 timeText.color = Color.red;
                 timeIconImage.color = Color.red;
             }
         }
+    }
+
+    private IEnumerator PlaySiren()
+    {
+        while(sirenCount > 0)
+        {
+            isPlayingSiren = true;
+            timerAudio.Play();
+            sirenCount--;
+            yield return new WaitForSeconds(0.9f);
+        }
+        
     }
 }

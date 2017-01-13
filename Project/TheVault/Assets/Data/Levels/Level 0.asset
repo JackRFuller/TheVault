@@ -15,9 +15,9 @@ MonoBehaviour:
     type: 2}
   levelStartingTime: 30
   starRatingTargets:
-  - 2000
-  - 5000
-  - 7500
+  - 3000
+  - 6000
+  - 10000
   isValuable: 0
   numberOfKeys: 1
   valuablePrefab: {fileID: 1082192140661052, guid: 2f2f6413301c06e449fdca1f1de9b297,
