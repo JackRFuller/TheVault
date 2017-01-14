@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CursorHandler : BaseMonoBehaviour
 {
+    [SerializeField]
+    private bool lockCursor;
+
     private bool isCursorDisabled;
 
     void OnEnable()
@@ -19,6 +22,12 @@ public class CursorHandler : BaseMonoBehaviour
 
         EventManager.StopListening("EndLevel", TurnOnCursor);
         EventManager.StopListening("FailedLevel", TurnOnCursor);
+    }
+
+    private void Start()
+    {
+        if (lockCursor)
+            TurnOffCursor();
     }
 
     public override void UpdateNormal()

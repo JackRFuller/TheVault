@@ -11,17 +11,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa68afe3ba75db74aa8a97d699ca1e7e, type: 3}
   m_Name: Level 0
   m_EditorClassIdentifier: 
-  levelPrefab: {fileID: 1353791230087076, guid: 1d7034a9fa623c940b225283e6f555b6,
+  levelPrefab: {fileID: 1478068133534894, guid: c8e796736d0ceb14da1e915a738e53bf,
     type: 2}
-  levelStartingTime: 30
+  levelStartingTime: 90
   starRatingTargets:
-  - 3000
-  - 6000
   - 10000
+  - 35000
+  - 750000
   isValuable: 0
-  numberOfKeys: 1
+  numberOfKeys: 2
   valuablePrefab: {fileID: 1082192140661052, guid: 2f2f6413301c06e449fdca1f1de9b297,
     type: 2}
   disabledMaterial: {fileID: 2100000, guid: 4f0997283e136fd46a2db0ccdf320ea5, type: 2}
   enabledMaterial: {fileID: 2100000, guid: b3da53818dcb72845974572d8de9e86c, type: 2}
-  levelTitle: Beginner's Vault
+  levelTitle: Prototype Vault

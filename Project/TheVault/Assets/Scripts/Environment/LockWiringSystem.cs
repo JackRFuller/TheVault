@@ -17,6 +17,16 @@ public class LockWiringSystem : BaseMonoBehaviour
 
     public void GenerateWires()
     {
+        //Adjust Rotation to match parent
+        Transform parent = this.transform.parent;
+
+        float offset = -parent.localEulerAngles.y;
+        Vector3 newRot = new Vector3(0,
+                                    offset,
+                                    0);
+
+        transform.localRotation = Quaternion.Euler(newRot);
+
         //Remove Existing Wires
         if (wires.childCount > 0)
             RemoveExistingWires();
@@ -35,6 +45,7 @@ public class LockWiringSystem : BaseMonoBehaviour
             //Is Waypoint above or below?
             if (IsWayPointOnDifferentYValue(wireWaypoints[i],wireWaypoints[i+1]))
             {
+               
                 //Position Between Points
                 float newY = wireWaypoints[i].position.y + wireWaypoints[i+1].position.y;
                 newY *= 0.5f;
@@ -46,37 +57,44 @@ public class LockWiringSystem : BaseMonoBehaviour
                 newWire.transform.position = newPosition;
 
                 //Adjust Scale
-                float newYScale = wireWaypoints[i+1].position.y - wireWaypoints[i].position.y;
+                float newYScale = wireWaypoints[i + 1].position.y - wireWaypoints[i].position.y;
                 newYScale = Mathf.Abs(newYScale);
                 newYScale += 0.1f;
 
                 Vector3 newScale = new Vector3(0.1f, newYScale, 0.1f);
 
                 newWire.transform.localScale = newScale;
+                
             }
             else if (IsWayPointOnDifferentXValue(wireWaypoints[i], wireWaypoints[i + 1]))
             {
+                Debug.Log("X");
                 //Position Between Points
-                float newX = wireWaypoints[i].position.x + wireWaypoints[i + 1].position.x;
+                Debug.Log(wireWaypoints[i].localPosition.x);
+                Debug.Log(wireWaypoints[i + 1].localPosition.x);
+                float newX = wireWaypoints[i].localPosition.x + wireWaypoints[i + 1].localPosition.x;
                 newX *= 0.5f;
+                Debug.Log(newX);
 
                 Vector3 newPosition = new Vector3(newX,
                                                   wireWaypoints[i].position.y,
                                                   wireWaypoints[i].position.z);
 
-                newWire.transform.position = newPosition;
+                newWire.transform.localPosition = newPosition;
 
                 //Adjust Scale
-                float newXScale = wireWaypoints[i + 1].position.x - wireWaypoints[i].position.x;
+                float newXScale = wireWaypoints[i + 1].localPosition.x - wireWaypoints[i].localPosition.x;
                 newXScale = Mathf.Abs(newXScale);
                 newXScale += 0.1f;
 
-                Vector3 newScale = new Vector3(newXScale, 0.1f, 0.1f);
+                Vector3 newScale = new Vector3(newXScale,0.1f, 0.1f);
 
                 newWire.transform.localScale = newScale;
+                Debug.Log(newScale);
             }
             else if (IsWayPointOnDifferentZValue(wireWaypoints[i], wireWaypoints[i + 1]))
             {
+                Debug.Log("Z");      
                 //Position Between Points
                 float newZ = wireWaypoints[i].position.z + wireWaypoints[i + 1].position.z;
                 newZ *= 0.5f;
@@ -94,13 +112,14 @@ public class LockWiringSystem : BaseMonoBehaviour
 
                 Vector3 newScale = new Vector3(0.1f, 0.1f, newZScale);
 
-                newWire.transform.localScale = newScale;
+                newWire.transform.localScale = newScale;                
             }
 
             MeshFilter mesh = newWire.GetComponent<MeshFilter>();
             generatedMeshes.Add(mesh);
 
             newWire.transform.parent = wires;
+            
 
         }
 
@@ -140,7 +159,7 @@ public class LockWiringSystem : BaseMonoBehaviour
 
     void GetWireWaypoints()
     {
-        wireWaypoints.Clear();
+        wireWaypoints = new List<Transform>();
 
         foreach(Transform waypoint in wireWaypoint)
         {
@@ -150,7 +169,7 @@ public class LockWiringSystem : BaseMonoBehaviour
 
     bool IsWayPointOnDifferentYValue(Transform waypoint1, Transform waypoint2)
     {
-        if (waypoint1.position.y != waypoint2.position.y)
+        if (waypoint1.localPosition.y != waypoint2.localPosition.y)
             return true;
         else
             return false;
@@ -158,7 +177,7 @@ public class LockWiringSystem : BaseMonoBehaviour
 
     bool IsWayPointOnDifferentXValue(Transform waypoint1, Transform waypoint2)
     {
-        if (waypoint1.position.x != waypoint2.position.x)
+        if (waypoint1.localPosition.x != waypoint2.localPosition.x)
             return true;
         else
             return false;
@@ -166,7 +185,7 @@ public class LockWiringSystem : BaseMonoBehaviour
 
     bool IsWayPointOnDifferentZValue(Transform waypoint1, Transform waypoint2)
     {
-        if (waypoint1.position.z != waypoint2.position.z)
+        if (waypoint1.localPosition.z != waypoint2.localPosition.z)
             return true;
         else
             return false;

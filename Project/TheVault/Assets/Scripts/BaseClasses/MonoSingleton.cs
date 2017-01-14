@@ -22,9 +22,10 @@ public class MonoSingleton<T> : BaseMonoBehaviour where T : Component
                 }
                 if(instance == null)
                 {
-                    GameObject obj = new GameObject();
-                    obj.hideFlags = HideFlags.HideAndDontSave;
-                    instance = obj.AddComponent<T>();
+                    //GameObject obj = new GameObject();
+                    //obj.hideFlags = HideFlags.HideAndDontSave;
+                    //instance = obj.AddComponent<T>();
+                    Debug.LogError("There is no" + typeof(T).Name + " in the scene");
                 }
             }
 
