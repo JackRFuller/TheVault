@@ -3,7 +3,7 @@
 ///////////////////////////////////////////////////////////
 
 ComponentType vp_FPController
-MotorAcceleration 0.5
+MotorAcceleration 0.35
 MotorDamping 0.18
 MotorAirSpeed 1
 MotorSlopeSpeedUp 1

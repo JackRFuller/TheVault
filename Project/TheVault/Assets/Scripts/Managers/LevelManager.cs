@@ -89,6 +89,7 @@ public class LevelManager : MonoSingleton<LevelManager>
     /// </summary>
     void StartLevel()
     {
+        levelTimer = currentLevel.LevelStartingTime;
         isLevelTimerRunning = true;
     }
 

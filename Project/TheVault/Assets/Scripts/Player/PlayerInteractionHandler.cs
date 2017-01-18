@@ -11,7 +11,7 @@ public class PlayerInteractionHandler : BaseMonoBehaviour
     private Camera playerCamera;
 
     //Lock
-    private LockHandler lockHandler;
+    private ForcefieldSwitchHandler lockHandler;
     private bool hasInteractionObject;
 
 
@@ -74,9 +74,9 @@ public class PlayerInteractionHandler : BaseMonoBehaviour
     
     private void GetLock(GameObject lockObj)
     {
-        if(lockHandler == null || lockHandler != lockObj.GetComponent<LockHandler>())
+        if(lockHandler == null || lockHandler != lockObj.GetComponent<ForcefieldSwitchHandler>())
         {
-            lockHandler = lockObj.GetComponent<LockHandler>();
+            lockHandler = lockObj.GetComponent<ForcefieldSwitchHandler>();
         }
         else
         {
@@ -88,7 +88,7 @@ public class PlayerInteractionHandler : BaseMonoBehaviour
 
             if (ExtensionMethods.GetPlayerInteractionInput())
             {
-                lockHandler.RemoveLock();                
+                lockHandler.DeactivateSwitch();                
             }
         }
     }   

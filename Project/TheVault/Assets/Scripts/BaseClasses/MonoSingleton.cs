@@ -25,7 +25,7 @@ public class MonoSingleton<T> : BaseMonoBehaviour where T : Component
                     //GameObject obj = new GameObject();
                     //obj.hideFlags = HideFlags.HideAndDontSave;
                     //instance = obj.AddComponent<T>();
-                    Debug.LogError("There is no" + typeof(T).Name + " in the scene");
+                    //Debug.LogError("There is no" + typeof(T).Name + " in the scene");
                 }
             }
 

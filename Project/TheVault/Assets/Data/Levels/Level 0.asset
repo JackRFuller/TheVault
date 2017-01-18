@@ -13,15 +13,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelPrefab: {fileID: 1478068133534894, guid: c8e796736d0ceb14da1e915a738e53bf,
     type: 2}
-  levelStartingTime: 90
+  levelStartingTime: 120
   starRatingTargets:
   - 10000
   - 35000
   - 750000
-  isValuable: 0
-  numberOfKeys: 2
+  isValuable: 1
+  numberOfKeys: 3
   valuablePrefab: {fileID: 1082192140661052, guid: 2f2f6413301c06e449fdca1f1de9b297,
     type: 2}
   disabledMaterial: {fileID: 2100000, guid: 4f0997283e136fd46a2db0ccdf320ea5, type: 2}
-  enabledMaterial: {fileID: 2100000, guid: b3da53818dcb72845974572d8de9e86c, type: 2}
+  enabledMaterial: {fileID: 2100000, guid: 55296d1b6ee54e14e8eb4648d4b448ee, type: 2}
   levelTitle: Prototype Vault
